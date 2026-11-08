@@ -1,4 +1,4 @@
-use std::alloc::Layout;
+use std::alloc::{GlobalAlloc, Layout};
 use std::alloc::System;
 use std::time::Instant;
 
