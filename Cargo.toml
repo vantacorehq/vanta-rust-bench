@@ -1,0 +1,28 @@
+[package]
+name = "vanta-rust-bench"
+version = "0.1.0"
+edition = "2021"
+description = "System allocator versus fixed-capacity atomic arena benchmark"
+license = "MIT"
+repository = "https://github.com/vantacorehq/vanta-rust-bench"
+readme = "README.md"
+
+[lib]
+name = "vanta_rust_bench"
+path = "src/lib.rs"
+
+[[bin]]
+name = "vanta-rust-bench"
+path = "src/main.rs"
+
+[dev-dependencies]
+criterion = "0.5"
+
+[[bench]]
+name = "alloc_bench"
+harness = false
+
+[profile.release]
+lto = true
+codegen-units = 1
+panic = "abort"
