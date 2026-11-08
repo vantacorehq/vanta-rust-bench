@@ -1,30 +1,19 @@
-//! Fixed-capacity atomic bump allocator.
-//!
-//! The allocator reserves aligned memory regions using an atomic cursor.
-//! Individual deallocations are intentionally no-ops. Memory is reclaimed
-//! only by resetting the complete arena after all allocations are unused.
-
 use std::alloc::{GlobalAlloc, Layout};
 use std::cell::UnsafeCell;
 use std::mem::MaybeUninit;
-use std::ptr::{self, NonNull};
+use std::ptr::NonNull;
 use std::sync::atomic::{AtomicUsize, Ordering};
 
-/// Fixed-capacity arena allocator.
-///
-/// The allocator supports concurrent allocation through atomic cursor
-/// reservation. It does not support individual memory reclamation.
+/// Fixed-capacity atomic bump allocator.
 pub struct DeterministicAllocator<const N: usize> {
     cursor: AtomicUsize,
     storage: UnsafeCell<[MaybeUninit<u8>; N]>,
 }
 
-// Atomic reservations guarantee that successful allocations own
-// non-overlapping ranges. Reset requires exclusive logical ownership.
+// Successful atomic reservations never overlap.
 unsafe impl<const N: usize> Sync for DeterministicAllocator<N> {}
 
 impl<const N: usize> DeterministicAllocator<N> {
-    /// Creates an empty arena.
     pub const fn new() -> Self {
         Self {
             cursor: AtomicUsize::new(0),
@@ -32,24 +21,19 @@ impl<const N: usize> DeterministicAllocator<N> {
         }
     }
 
-    /// Returns total arena capacity.
     pub const fn capacity(&self) -> usize {
         N
     }
 
-    /// Returns the number of reserved bytes, including alignment padding.
     pub fn used(&self) -> usize {
-        self.cursor.load(Ordering::Acquire)
+        self.cursor.load(Ordering::Relaxed)
     }
 
-    /// Returns the unreserved capacity.
     pub fn remaining(&self) -> usize {
         N.saturating_sub(self.used())
     }
 
-    /// Reserves an aligned region from the arena.
-    ///
-    /// Returns `None` if the requested layout cannot fit.
+    /// Reserve an aligned region.
     pub fn allocate(&self, layout: Layout) -> Option<NonNull<u8>> {
         let size = layout.size().max(1);
         let alignment = layout.align();
@@ -80,27 +64,22 @@ impl<const N: usize> DeterministicAllocator<N> {
                 Ordering::Relaxed,
             ) {
                 Ok(_) => {
-                    let allocation = unsafe { base.add(offset) };
-                    return NonNull::new(allocation);
+                    // The reserved range is within the arena.
+                    let ptr = unsafe { base.add(offset) };
+                    return NonNull::new(ptr);
                 }
                 Err(actual) => current = actual,
             }
         }
     }
 
-    /// Resets the arena allocation cursor.
+    /// Reset only when no allocations from this arena are in use.
     ///
     /// # Safety
-    ///
-    /// The caller must guarantee that:
-    ///
-    /// - No allocation previously returned by this arena is being accessed.
-    /// - No previous allocation will ever be accessed again.
-    /// - No thread is concurrently allocating from this arena.
-    ///
-    /// Resetting while allocations remain in use can cause memory aliasing.
+    /// The caller must ensure that no thread accesses any previously
+    /// allocated region while the arena is being reset.
     pub unsafe fn reset(&self) {
-        self.cursor.store(0, Ordering::SeqCst);
+        self.cursor.store(0, Ordering::Release);
     }
 }
 
@@ -110,21 +89,20 @@ impl<const N: usize> Default for DeterministicAllocator<N> {
     }
 }
 
-// SAFETY: allocate returns disjoint reserved regions. dealloc deliberately
-// does not reclaim memory; reset is governed by its documented safety contract.
 unsafe impl<const N: usize> GlobalAlloc for DeterministicAllocator<N> {
     unsafe fn alloc(&self, layout: Layout) -> *mut u8 {
         self.allocate(layout)
-            .map_or(ptr::null_mut(), NonNull::as_ptr)
+            .map_or(std::ptr::null_mut(), |ptr| ptr.as_ptr())
     }
 
-    unsafe fn dealloc(&self, _ptr: *mut u8, _layout: Layout) {}
+    unsafe fn dealloc(&self, _ptr: *mut u8, _layout: Layout) {
+        // Individual deallocation is intentionally unsupported.
+    }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::DeterministicAllocator;
-    use std::alloc::Layout;
+    use super::*;
     use std::collections::HashSet;
     use std::sync::Arc;
     use std::thread;
@@ -223,7 +201,7 @@ mod tests {
                 for _ in 0..PER_THREAD {
                     let allocation = arena
                         .allocate(layout)
-                        .expect("arena capacity unexpectedly exhausted");
+                        .expect("arena capacity exhausted");
 
                     addresses.push(allocation.as_ptr() as usize);
                 }
@@ -238,7 +216,8 @@ mod tests {
             all_addresses.extend(handle.join().unwrap());
         }
 
-        let unique: HashSet<usize> = all_addresses.iter().copied().collect();
+        let unique: HashSet<usize> =
+            all_addresses.iter().copied().collect();
 
         assert_eq!(all_addresses.len(), THREADS * PER_THREAD);
         assert_eq!(unique.len(), all_addresses.len());
@@ -248,3 +227,15 @@ mod tests {
         }
     }
 }
+
+
+    
+
+
+        
+       
+
+        
+   
+
+        f
