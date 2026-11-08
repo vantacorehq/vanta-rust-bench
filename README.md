@@ -1,0 +1,13 @@
+## Banner (1280×640)
+
+Save as `banner.svg`, convert to `banner.png`, upload as social preview.
+
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640">
+  <rect width="1280" height="640" fill="#0a0a0a"/>
+  <rect x="0" y="0" width="1280" height="4" fill="#00ff9d"/>
+  <text x="80" y="120" font-family="monospace" font-size="28" fill="#666">VantaCore Systems</text>
+  <text x="80" y="300" font-family="monospace" font-size="96" font-weight="bold" fill="#ffffff">VANTA ENGINE</text>
+  <text x="80" y="400" font-family="monospace" font-size="36" fill="#00ff9d">Web3 automation · Python</text>
+  <text x="80" y="560" font-family="monospace" font-size="24" fill="#444">batch · retry · gas-opt · sqlite</text>
+</svg>
