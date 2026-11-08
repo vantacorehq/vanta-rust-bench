@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640">
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#18251f" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#101512"/>
+      <stop offset="0.48" stop-color="#090d0b"/>
+      <stop offset="1" stop-color="#050706"/>
+    </linearGradient>
+    <linearGradient id="core" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#173b2c"/>
+      <stop offset="0.5" stop-color="#0b1a13"/>
+      <stop offset="1" stop-color="#07100c"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#00ff9d" stop-opacity="0.15"/>
+      <stop offset="0.5" stop-color="#00ff9d"/>
+      <stop offset="1" stop-color="#00ff9d" stop-opacity="0.2"/>
+    </linearGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softglow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="15"/>
+    </filter>
+    <clipPath id="rightPanel">
+      <rect x="770" y="65" width="455" height="510"/>
+    </clipPath>
+  </defs>
+  <rect width="1280" height="640" fill="url(#background)"/>
+  <rect width="1280" height="640" fill="url(#grid)" opacity="0.55"/>
+  <rect width="1280" height="5" fill="#00ff9d"/>
+  <g opacity="0.15">
+    <path d="M0 520H1280M0 560H1280M0 600H1280" stroke="#00ff9d"/>
+    <path d="M40 0V640M80 0V640M1200 0V640M1240 0V640" stroke="#00ff9d"/>
+  </g>
+  <g font-family="monospace">
+    <text x="78" y="86" font-size="23" letter-spacing="5" fill="#00ff9d">VANTACORE SYSTEMS</text>
+    <text x="78" y="119" font-size="13" letter-spacing="3" fill="#52665b">LOW-LEVEL MEMORY ENGINEERING / 001</text>
+    <path d="M78 151H685" stroke="#34483d" stroke-width="1"/>
+    <path d="M78 151H208" stroke="#00ff9d" stroke-width="3"/>
+    <text x="72" y="280" font-size="83" font-weight="bold" letter-spacing="-5" fill="#f2f7f3">VANTA</text>
+    <text x="72" y="373" font-size="83" font-weight="bold" letter-spacing="-5" fill="#f2f7f3">RUST</text>
+    <text x="72" y="466" font-size="83" font-weight="bold" letter-spacing="-5" fill="#00ff9d">BENCH</text>
+    <text x="80" y="516" font-size="20" fill="#b0c0b5">SYSTEM ALLOCATOR VS ATOMIC ARENA</text>
+    <text x="80" y="552" font-size="15" letter-spacing="2" fill="#64766a">RUST / GLOBALALLOC / MEMORY / CRITERION</text>
+    <text x="80" y="601" font-size="12" letter-spacing="3" fill="#405148">VANTACOREHQ // PERFORMANCE LAB</text>
+  </g>
+  <g clip-path="url(#rightPanel)">
+    <circle cx="1000" cy="310" r="225" fill="#00ff9d" opacity="0.035" filter="url(#softglow)"/>
+    <g fill="none" stroke="#244a37" stroke-width="1">
+      <path d="M770 95H1225M770 125H1225M770 155H1225M770 185H1225M770 215H1225M770 245H1225M770 275H1225M770 305H1225M770 335H1225M770 365H1225M770 395H1225M770 425H1225M770 455H1225M770 485H1225M770 515H1225"/>
+      <path d="M800 65V575M830 65V575M860 65V575M890 65V575M920 65V575M950 65V575M980 65V575M1010 65V575M1040 65V575M1070 65V575M1100 65V575M1130 65V575M1160 65V575M1190 65V575"/>
+    </g>
+    <g fill="none" stroke="#00ff9d" stroke-width="2" opacity="0.55">
+      <path d="M790 220H850V190H910"/>
+      <path d="M1110 190H1160V220H1200"/>
+      <path d="M790 400H850V430H910"/>
+      <path d="M1110 430H1160V400H1200"/>
+      <path d="M1000 70V110"/>
+      <path d="M1000 510V550"/>
+      <path d="M800 310H855"/>
+      <path d="M1145 310H1200"/>
+    </g>
+    <g fill="#00ff9d" filter="url(#glow)">
+      <circle cx="790" cy="220" r="4"/>
+      <circle cx="910" cy="190" r="4"/>
+      <circle cx="1200" cy="220" r="4"/>
+      <circle cx="790" cy="400" r="4"/>
+      <circle cx="910" cy="430" r="4"/>
+      <circle cx="1200" cy="400" r="4"/>
+      <circle cx="1000" cy="110" r="4"/>
+      <circle cx="1000" cy="510" r="4"/>
+    </g>
+    <g transform="translate(1000 310)">
+      <rect x="-150" y="-150" width="300" height="300" rx="12" fill="#07100b" stroke="#00ff9d" stroke-width="2" opacity="0.95"/>
+      <rect x="-130" y="-130" width="260" height="260" rx="7" fill="url(#core)" stroke="#285c41" stroke-width="2"/>
+      <g stroke="#00ff9d" stroke-width="3" fill="none" opacity="0.8">
+        <path d="M-180 -75H-130M-180 -25H-130M-180 25H-130M-180 75H-130"/>
+        <path d="M130 -75H180M130 -25H180M130 25H180M130 75H180"/>
+        <path d="M-75 -180V-130M-25 -180V-130M25 -180V-130M75 -180V-130"/>
+        <path d="M-75 130V180M-25 130V180M25 130V180M75 130V180"/>
+      </g>
+      <g fill="none" stroke="#00ff9d" stroke-width="2">
+        <rect x="-102" y="-102" width="204" height="204" rx="4"/>
+        <rect x="-77" y="-77" width="154" height="154" rx="3" opacity="0.5"/>
+        <path d="M-77 -38H77M-77 0H77M-77 38H77" opacity="0.45"/>
+        <path d="M-38 -77V77M0 -77V77M38 -77V77" opacity="0.45"/>
+      </g>
+      <g fill="#00ff9d" opacity="0.95" filter="url(#glow)">
+        <rect x="-65" y="-65" width="35" height="35"/>
+        <rect x="30" y="-65" width="35" height="35"/>
+        <rect x="-65" y="30" width="35" height="35"/>
+        <rect x="30" y="30" width="35" height="35"/>
+      </g>
+      <rect x="-21" y="-21" width="42" height="42" fill="#00ff9d" filter="url(#glow)"/>
+      <rect x="-12" y="-12" width="24" height="24" fill="#07100b"/>
+      <path d="M-12 0H12M0 -12V12" stroke="#00ff9d" stroke-width="2"/>
+      <g font-family="monospace" font-size="9" fill="#a3e9c1" letter-spacing="1">
+        <text x="-88" y="-113">ALLOC_CORE</text>
+        <text x="-88" y="119">MEMORY_REGION</text>
+      </g>
+    </g>
+    <g font-family="monospace" font-size="11" fill="#00ff9d" opacity="0.8">
+      <text x="792" y="88">MEMORY MAP / 0x001</text>
+      <text x="1050" y="88">ATOMIC CAS</text>
+      <text x="792" y="555">ARENA STATUS: ACTIVE</text>
+      <text x="1070" y="555">CAPACITY / FIXED</text>
+    </g>
+  </g>
+  <path d="M750 65V575" stroke="#294c38" stroke-width="1"/>
+  <path d="M750 65V170" stroke="#00ff9d" stroke-width="3"/>
+  <path d="M750 470V575" stroke="#00ff9d" stroke-width="3"/>
+</svg>
