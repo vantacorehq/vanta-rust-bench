@@ -1,0 +1,6 @@
+/target/
+**/*.rs.bk
+
+# Benchmark output is intentionally retained outside target.
+!bench-results.png
+!banner.png
